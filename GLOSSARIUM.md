@@ -1,0 +1,20 @@
+NaN (Not a Number): The standard way programming languages (like Python/Pandas) represent missing or empty data.
+Imputation: The process of replacing missing data with substituted values (like averages, medians, or predictions) so your AI doesn't crash when it reads the data.
+Threshold (thresh): A limit you set in code. For dropping data, thresh=10 means "only keep rows that pass the test of having at least 10 valid data points."
+KNN Imputation (K-Nearest Neighbors): A smart way to fill missing data. If User A is missing their gaming_hours, the AI finds 5 other users who have similar age, sleep hours, and screen time to User A, and copies their homework (averages their gaming hours) to fill User A's blank.
+Categorical Encoding: Exactly what you just did! It’s the process of taking words (Male, Female, Other) and turning them into numbers (0.0, 1.0, 2.0) because Machine Learning models can only do math, and they can't do math on letters.
+fit_transform: You will see this everywhere in Machine Learning.
+Fit means "look at the data and learn the math/patterns."
+Transform means "actually apply the changes to the data."
+fit_transform does both at the exact same time!
+NumPy Array vs. Pandas DataFrame: A Pandas DataFrame is like an Excel sheet (it has nice column names and row numbers). Scikit-learn tools (like KNN) hate column names, so they strip them away and return a NumPy Array, which is just a raw, naked grid of numbers. We always have to convert it back to a DataFrame so we can read it easily.
+One-Hot Encoding (OHE): The process of taking a category (like Gender) and turning it into multiple Yes/No (1 or 0) columns. This stops the AI from accidentally thinking that "Female (2)" is mathematically greater than "Male (1)".
+Big O Notation / Scalability: A concept in computer science that describes how much longer an algorithm takes as data gets bigger. KNN is notoriously slow for big data because it doesn't scale well.
+pd.get_dummies(): The absolute best command in Pandas for One-Hot Encoding. It automatically takes a column, splits it into multiple columns based on the categories, and fills them with 1s and 0s.
+IterativeImputer: An algorithmic imputer that treats every single column as its own mini Machine Learning target. It looks at Age, Screen Time, and Sleep to predict missing Gaming Hours. Then it looks at Age, Gaming Hours, and Sleep to predict missing Screen Time. It loops around ("iterates") until everything is filled perfectly.
+Knowledge Entry #37: The "Hidden Categories" Problem. When trying to engineer a total sum from sub-categories (e.g., Total Screen Time = Gaming + Social Media), it usually fails in real-world data because there are always unrecorded activities (like watching videos or texting). You cannot force a perfect mathematical formula on human behavior.
+Knowledge Entry #38: Small Data vs. Big Data Imputation. In small datasets (<10k rows), manual proxy imputation (like using Titles for Age) is great. In massive datasets (>500k rows), we rely on scalable methods like Grouped Medians, treating missing text as an "Unknown" category, or Algorithmic Imputation (MICE).
+Knowledge Entry #39: The Ordinality Problem (Label vs. One-Hot Encoding). If you encode text like Gender or Colors into 0, 1, 2 (Label Encoding), math-based algorithms will assume 2 is greater or more important than 1. To prevent this, we use One-Hot Encoding (creating separate True/False columns for each category) so all categories are treated equally.
+Knowledge Entry #40: The Grouped Imputation Trap. When filling missing numbers using a grouped average/median, you must never group by your Target Variable (the thing you are trying to predict). You won't have the target variable in the real-world test data, so your pipeline will crash.
+Nominal Data: Categories with no order (e.g., Male/Female, Blue/Red, Apple/Orange). You must use One-Hot Encoding (creating new True/False columns).
+Ordinal Data: Categories with a strict logical order (e.g., Low/Medium/High, Bad/Good/Excellent). You should use Label Encoding (0, 1, 2) because the math actually represents real-world intensity.
