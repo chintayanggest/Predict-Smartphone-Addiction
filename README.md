@@ -20,7 +20,7 @@ To push past the 90% threshold, I adapted an Apache 2.0 open-source CatBoost arc
 * **OOF 5-Fold Stratified CV:** Trained 5 independent CatBoost models using early stopping, blending their outputs for a highly stable prediction.
 * **Result:** `96.36%` AUC.
 
-### Phase 3: Ensembling (`03_submission_ensembling.ipynb`)
+### Phase 3: Ensembling (`submission_ensembling.ipynb`)
 A demonstration of Kaggle-style "Blending," reading the probability outputs of multiple models and merging them using weighted averages to capture edge cases.
 
 ## ⚖️ Legal & Acknowledgements
