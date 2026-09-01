@@ -1,3 +1,26 @@
+# 🧠 The Glossarium: Big Data & Kaggle Meta
+
+### 📊 Data Encoding & Scaling
+* **Nominal vs. Ordinal Data:** Nominal data (Gender) has no math order and must be One-Hot Encoded. Ordinal data (Low, Med, High) has natural intensity and should be Label Encoded (0, 1, 2). 
+* **The "Unknown" Paradox:** If you map Ordinal data (0, 1, 2) but have missing values, map "Unknown" to an extreme outlier like `-1`. Tree models will isolate it into a separate branch without ruining the 0-1-2 math order.
+* **Selective Scaling:** Never apply `StandardScaler` blindly to an entire dataset. Exclude target variables, dummy columns, and ordinal variables. Only scale continuous numbers (Hours, Age, etc.).
+
+### ⚙️ Big Data Bottlenecks
+* **Time Complexity limits:** Algorithms like SVM and KNN have $O(n^2)$ time complexity. They will crash on datasets >100,000 rows.
+* **The Kaggle Kings:** XGBoost, LightGBM, and CatBoost. These are Tree-based Gradient Boosting frameworks engineered to chew through millions of rows using advanced multithreading.
+* **CatBoost's Native Handling:** CatBoost's superpower is its ability to eat raw categorical text natively without One-Hot Encoding, using Ordered Target Statistics to avoid cheating. It also automatically routes numerical `NaNs` through its trees, requiring zero imputation.
+
+### 🏃‍♂️ Training Workflow
+* **FAST_DEV_RUN (Dry Runs):** Never run a multi-hour training loop blindly. Create a switch that runs the model on 2 iterations to ensure the CSV saves correctly and there are no syntax errors at the end of the script.
+* **Early Stopping:** Tell the model to monitor the validation score. If it stops improving for 100 trees, stop training automatically to prevent overfitting and save time.
+* **Data Mutation (`.copy()`):** In Pandas, always use `.copy()` when passing a DataFrame into a feature engineering function to prevent permanently destroying the original raw data in RAM.
+
+### 🏆 The Kaggle Meta (Grandmaster Strategies)
+* **Feature Ablation & Residuals:** The best features are often hidden math. Subtract known hours from total hours to find "Residuals" (slack). Divide hours by total hours to find "Ratios" (percentages of daily life).
+* **OOF (Out-Of-Fold) Predictions:** Saving the validation predictions from a Stratified K-Fold loop. This gives you an honest score on 100% of the training data without data leakage.
+* **Blending / Ensembling:** You don't need to combine Python code to combine models. You can simply take the CSV outputs of two different models, average their probabilities together, and submit the blended CSV. 
+* **Agentic Data Science (The AI Swarm):** Modern Grandmasters act as Orchestrators. They use scripts to deploy swarms of LLMs (GPT, Claude, DeepSeek) to autonomously brainstorm features, write code, and battle each other for the highest CV score.
+
 NaN (Not a Number): The standard way programming languages (like Python/Pandas) represent missing or empty data.
 Imputation: The process of replacing missing data with substituted values (like averages, medians, or predictions) so your AI doesn't crash when it reads the data.
 Threshold (thresh): A limit you set in code. For dropping data, thresh=10 means "only keep rows that pass the test of having at least 10 valid data points."
@@ -29,3 +52,5 @@ Knowledge Entry #67: Early Stopping. A technique used in Gradient Boosting and N
 Knowledge Entry #68: Stratified Splitting. When dealing with imbalanced datasets (e.g., 71% Positive, 29% Negative), normal random splitting can create biased chunks. Stratification guarantees that the original ratio is perfectly preserved across all train/test splits.
 Knowledge Entry #69: Multithreading (thread_count=-1). Advanced ML algorithms allow you to specify how many CPU cores to use. Setting it to -1 tells Python to use 100% of your computer's available cores, maximizing speed but turning your laptop into a temporary space heater.
 Knowledge Entry #70: The "Dry Run" Paradigm. Never run a massive, multi-hour script without doing a "Dry Run" (Fast Dev Run) first. Testing the entire pipeline (from data loading to CSV saving) on a tiny fraction of the data guarantees you won't lose hours of compute time to a silly syntax error at the very end.
+Knowledge Entry #74: Late Submissions. On Kaggle, once a competition's deadline passes, the leaderboard is frozen in stone. However, you can still submit predictions to test your skills and see how you would have ranked. These are called Late Submissions and are entirely for educational purposes.
+Knowledge Entry #75: Weighted Ensembling. When blending two CSVs together, you don't always have to do a 50/50 average. If Model A is much stronger than Model B, you can use a Weighted Average (e.g., (A * 0.7) + (B * 0.3)) to give the stronger model more voting power.
